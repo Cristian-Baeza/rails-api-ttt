@@ -173,6 +173,7 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
     thor (1.1.0)
+    tic_tac_toe_logic (0.1.1)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
@@ -195,6 +196,7 @@ DEPENDENCIES
   rubocop
   spring
   sqlite3 (~> 1.4)
+  tic_tac_toe_logic
   tzinfo-data
 
 RUBY VERSION
