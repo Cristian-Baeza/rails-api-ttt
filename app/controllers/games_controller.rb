@@ -20,7 +20,7 @@ class GamesController < ApplicationController
   def create
     Game.delete_all
     new_game = TicTacToeLogic::GameBoardData.new
-    @game = Game.new({ "game_state": 'IN-PROGRESS', "current_player": new_game.current_player.to_s, "board": new_game })
+    @game = Game.new({ "game_state": "IN-PROGRESS", "current_player": new_game.current_player.to_s, "board": new_game })
 
     if @game.save
       render json: @game, status: :created, location: @game
@@ -33,7 +33,7 @@ class GamesController < ApplicationController
     @game = Game.find(1)
     @game.board.play_move(params[:move].to_i)
     @game.current_player = @game.board.current_player
-    @game.game_state = @game.board.game_over? ? 'GAME OVER' : 'IN-PROGRESS'
+    @game.game_state = @game.board.game_over? ? "GAME OVER" : "IN-PROGRESS"
 
     if @game.save
       render json: @game, status: :created, location: @game
