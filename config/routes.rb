@@ -3,5 +3,5 @@
 Rails.application.routes.draw do
   resources :games
 
-  patch '/submit_move/:move', to: 'games#submit_move'
+  post '/submit_move/:move', to: 'games#submit_move'
 end
