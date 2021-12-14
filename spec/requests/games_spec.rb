@@ -26,7 +26,7 @@ RSpec.describe '/games', type: :request do
   end
 
   let(:invalid_attributes) do
-    { "not_game_state": nil, "not_current_player": nil, "not_board": nil }
+    { "not_current_player": nil, "not_board": nil }
   end
 
   # This should return the minimal set of values that should be in the headers
@@ -69,28 +69,19 @@ RSpec.describe '/games', type: :request do
         expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
-  end
 
-  describe 'PATCH /update' do
-    context 'with valid parameters' do
-      let(:new_attributes) do
-        { "game_state": 'in-progress', "current_player": new_game.current_player.to_s, "board": new_game }
+    context "with invalid parameters" do
+      it "does not create a new Game" do
+        expect {
+          post games_url,
+               params: { game: invalid_attributes }, as: :json
+        }.to change(Game, :count).by(1)
       end
 
-      it 'updates the requested game' do
-        game = Game.create! valid_attributes
-        patch game_url(game),
-              params: { game: new_attributes }, headers: valid_headers, as: :json
-        game.reload
-        expect(response).to be_successful
-      end
-
-      it 'renders a JSON response with the game' do
-        game = Game.create! valid_attributes
-        patch game_url(game),
-              params: { game: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including('application/json'))
+      it "renders a JSON response with errors for the new game" do
+        post games_url,
+             params: { game: invalid_attributes }, headers: valid_headers, as: :json
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
     end
   end

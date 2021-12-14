@@ -43,15 +43,6 @@ class GamesController < ApplicationController
     end
   end
 
-  # # PATCH/PUT /games/1
-  # def update
-  #   if @game.update(game_params)
-  #     render json: @game
-  #   else
-  #     render json: @game.errors, status: :unprocessable_entity
-  #   end
-  # end
-
   # DELETE /games/1
   def destroy
     @game.destroy
