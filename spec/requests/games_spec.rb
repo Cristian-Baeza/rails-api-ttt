@@ -22,11 +22,11 @@ RSpec.describe '/games', type: :request do
   new_game = TicTacToeLogic::GameBoardData.new
   let(:valid_attributes) do
     # skip("Add a hash of attributes valid for your model")
-    { "game_state": 'in-progress', "current_player": new_game.current_player.to_s, "board": new_game }
+    { "board": new_game }
   end
 
   let(:invalid_attributes) do
-    { "not_current_player": nil, "not_board": nil }
+    { "not_board": nil }
   end
 
   # This should return the minimal set of values that should be in the headers
@@ -65,7 +65,7 @@ RSpec.describe '/games', type: :request do
       it 'renders a JSON response with the new game' do
         post games_url,
              params: { game: valid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:created)
+        expect(response).to have_http_status(:ok)
         expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
