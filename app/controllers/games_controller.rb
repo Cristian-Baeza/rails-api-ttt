@@ -2,7 +2,7 @@
 
 # Comment necessary for Rubocop
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[show update destroy]
+  before_action :set_game, only: %i[show destroy submit_move]
 
   # GET /games
   def index
@@ -29,7 +29,6 @@ class GamesController < ApplicationController
 
   # POST '/submit_move/:id/:move'
   def submit_move
-    @game = Game.find(params[:id])
     @game.board.play_move(params[:move].to_i)
 
     if @game.save
