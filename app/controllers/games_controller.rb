@@ -4,14 +4,6 @@
 class GamesController < ApplicationController
   before_action :set_game, only: %i[show update destroy]
 
-  def render_game_with_state_and_player(game)
-    render json: game.as_json.merge(
-      "game_state": "#{game.board.game_over? ? "GAME OVER" : "IN-PROGRESS"}",
-      "current_player": "#{game.board.current_player}"
-    )
-  end
-
-
   # GET /games
   def index
     @games = Game.all
@@ -21,7 +13,7 @@ class GamesController < ApplicationController
 
   # GET /games/1
   def show
-    render_game_with_state_and_player(@game)
+    render json: render_game_with_state_and_player(@game)
   end
 
   # POST /games
@@ -31,7 +23,7 @@ class GamesController < ApplicationController
     @game = Game.new({ "board": new_game })
 
     if @game.save
-      render_game_with_state_and_player(@game)
+      render json: render_game_with_state_and_player(@game)
     else
       render json: @game.errors, status: :unprocessable_entity
     end
@@ -43,7 +35,7 @@ class GamesController < ApplicationController
     @game.board.play_move(params[:move].to_i)
 
     if @game.save
-      render_game_with_state_and_player(@game)
+      render json: render_game_with_state_and_player(@game)
     else
       render json: @game.errors, status: :unprocessable_entity
     end
