@@ -11,16 +11,14 @@ class GamesController < ApplicationController
     render json: @games
   end
 
-  # GET /games/1
+  # GET /games/:id
   def show
     render json: render_game_with_state_and_player(@game)
   end
 
   # POST /games
   def create
-    Game.delete_all
-    new_game = TicTacToeLogic::GameBoardData.new
-    @game = Game.new({ "board": new_game })
+    @game = Game.new({ "board": TicTacToeLogic::GameBoardData.new })
 
     if @game.save
       render json: render_game_with_state_and_player(@game)
@@ -29,9 +27,9 @@ class GamesController < ApplicationController
     end
   end
 
-  # POST '/submit_move/:move'
+  # POST '/submit_move/:id/:move'
   def submit_move
-    @game = Game.find(1)
+    @game = Game.find(params[:id])
     @game.board.play_move(params[:move].to_i)
 
     if @game.save
@@ -41,7 +39,7 @@ class GamesController < ApplicationController
     end
   end
 
-  # DELETE /games/1
+  # DELETE /games/:id
   def destroy
     @game.destroy
   end
@@ -54,6 +52,6 @@ class GamesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def game_params
-    params.require(:game).permit(:game_state, :current_player, board: [])
+    params.require(:game).permit(board: [])
   end
 end
