@@ -50,7 +50,7 @@ A Rails API that uses my tic tac toe logic gem
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to delete |
 
-## Running Tests
+## Tests
 
 To run tests, run the following command
 
