@@ -1,5 +1,5 @@
 
-# Rails Tic Tac Toe
+# Rails API Tic Tac Toe
 
 A Rails API that uses my tic tac toe logic gem
 
